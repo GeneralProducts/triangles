@@ -1,4 +1,4 @@
-require "triangles/polygon"
+require_relative "./polygon"
 
 class EquilateralTriangle < Polygon
   WIDTH_TO_HEIGHT = 1.1547

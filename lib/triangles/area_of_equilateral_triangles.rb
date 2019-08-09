@@ -35,6 +35,28 @@ class AreaOfEquilateralTriangles
     self
   end
 
+  def flowing_colors!(bands)
+    number_of_bands = bands.count
+    a_high_number = (polygons.count * 2) +  polygons.map {|p| p.leftmost}.min + polygons.map {|p| p.rightmost}.max
+    previous_edge = 0
+    previous_band = bands[0]
+    bands.each_with_index do |band, idx|
+      current_edge = (a_high_number / number_of_bands) * idx
+      polygons.each_with_index do |polygon, i|
+        color = i + polygon.leftmost
+        if color < current_edge and color > previous_edge
+          polygon.color!(band.sample)
+        end
+        if  current_edge - previous_edge < 50
+          polygon.color!(previous_band.sample + band.sample)
+        end
+      end
+      previous_edge = current_edge
+      previous_band = band
+    end
+    self
+  end
+
   def logo_cut_out!(logo)
     logo.each do |row_num, triangle_num|
       row       = rows[row_num]
@@ -50,6 +72,27 @@ class AreaOfEquilateralTriangles
                   end
       triangles.each do |triangle|
         row.polygons[triangle].color!("white")
+      end
+    end
+    self
+  end
+
+  def logo_color_in!(logo, colors)
+    logo.each do |row_num, triangle_num|
+      row       = rows[row_num]
+      raise "Out of row range" unless row
+      triangles = if triangle_num.is_a? Range
+                    triangle_num.to_a
+                  elsif triangle_num.is_a? Integer
+                    [triangle_num]
+                  elsif triangle_num.is_a? Enumerable
+                    triangle_num
+                  else
+                    raise "Must be a range, integer or enumerable; is a #{triangle_num.class}"
+                  end
+      triangles.each do |triangle|
+        row.polygons[triangle].color!(colors.sample)
+
       end
     end
     self

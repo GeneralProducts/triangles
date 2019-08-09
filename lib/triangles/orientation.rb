@@ -22,10 +22,10 @@ class Orientation
 
   def swap!
     @value = if up?
-              :down
-            else
-              :up
-            end
+                :down
+              else
+                :up
+              end
   end
 
   attr_reader :value

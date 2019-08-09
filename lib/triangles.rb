@@ -1,11 +1,11 @@
-require "triangles/area_of_equilateral_triangles"
-require "triangles/draw_svg"
-require "triangles/equilateral_triangle"
-require "triangles/orientation"
-require "triangles/point"
-require "triangles/polygon"
-require "triangles/row_of_equilateral_triangles"
-require "triangles/logo"
+require_relative "./triangles/area_of_equilateral_triangles"
+require_relative "./triangles/draw_svg"
+require_relative "./triangles/equilateral_triangle"
+require_relative "./triangles/orientation"
+require_relative "./triangles/point"
+require_relative "./triangles/polygon"
+require_relative "./triangles/row_of_equilateral_triangles"
+require_relative "./triangles/logo"
 
 PALETTE = %w[
 #3D0079
@@ -73,7 +73,6 @@ GREYS = %w[
 #E1DCD4
 #EFEBE7
 #F5F2EF
-#FAF7F5
 ]
 
 BROWNS = %w[
@@ -174,9 +173,13 @@ DrawSVG.new(
     height:            59.0 * 40,
     width:             88.0 * 40,
     first_orientation: Orientation.up,
-    number_of_rows:    250
+    number_of_rows:    50
   ).build!
-  .random_colors!((BROWNS * 2) + PURPLES)
-  .logo_cut_out!(Logo.new(124, 80).call)
-  .polygons
+  .random_colors!( PURPLES)
+.polygons
 ).call
+
+# .random_colors!( PURPLES)
+# .logo_cut_out!(Logo.new(29, 13).call)
+# .logo_color_in!(Logo.new(29, 13).call,BROWNS )
+# .flowing_colors!([GREYS, GREYS , BROWNS, PURPLES])
